@@ -5,7 +5,6 @@ export default async (req,res) => {
     const { db } = await connect();
     const { name } = req.query;
     const a = name.toString();
-
     const response = await db
       .collection("Medical")
       .find({ $or: [{ name: RegExp(a, "gi") }, { email: name }] })

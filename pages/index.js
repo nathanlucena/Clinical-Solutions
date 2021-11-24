@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import Head from "next/head";
+import Head from 'next/head';
 import { Header } from '../src/components/header/';
 import { Menu } from '../src/components/menu/';
 import userContext from '../src/contexts/userContext';
@@ -10,36 +10,38 @@ import useSWR from 'swr';
 // Importando a função do axios que vai ver se existe um dado igual ao email logado pelo google
 import AxiosLogged from '../utils/api';
 
-// O next-auth é a lib responsavel pelo login do google 
+// O next-auth é a lib responsavel pelo login do google
 // Botao pra singOut   <button onClick={() => signOut()}>singOut</button>
 // Botao pra singIn  <button onClick={() => signIn('auth0')}>Sign in</button>
-import { useSession, signIn, signOut } from "next-auth/client";
+import { useSession, signIn, signOut } from 'next-auth/client';
 import { NotLogged } from '../src/components/NotLogged';
 import { NotRegistered } from '../src/components/NotRegistered';
 import { LoggedRegistered } from '../src/components/LoggedRegistered';
 //import { Loader } from '../src/components/Loader/';
 
-
 export default function Component() {
-  // State criado pra ser o "LOGADO COM O GOOGLE, MAS SEM CONTA NO NOSSO SITE" 
+  // State criado pra ser o "LOGADO COM O GOOGLE, MAS SEM CONTA NO NOSSO SITE"
   const [loggedAccount, setLoggedAccount] = useState(false);
 
   // O useSession é que pega os dados do nosso usuario google como "session.user.name/email/avatar"
-  const [session, loading] = useSession()
+  const [session, loading] = useSession();
 
   // Aqui o SWR faz uma busca se o email do google existe no nosso banco
-  const { data, error } = useSWR(!loggedAccount && !loading ? `/api/doctor/${session?.user.email}` : null, AxiosLogged);
-  
+  const { data, error } = useSWR(
+    !loggedAccount && !loading ? `/api/doctor/${session?.user.email}` : null,
+    AxiosLogged
+  );
+
   const { setUserInfo } = useContext(userContext);
   // Esse useEfect tá sendo o problema porque ele que diz se o usuario tá "loggedAccont", mas o if acaba não sendo tão rapido então se ele não tiver conta no nosso banco ele da um erro
-  // Então da pra testar emails que ja estão no nosso banco de boa, já que a ideia do site não deixa ninguém logado 
+  // Então da pra testar emails que ja estão no nosso banco de boa, já que a ideia do site não deixa ninguém logado
   // Resumidamente por enquanto se tu quiser testar o "loggedAccount" tu tem que comentar todo o conteúdo que envolve o "data"
   useEffect(() => {
     if (session?.user.email !== data?.data.email) setLoggedAccount(true);
   }, [data]);
 
-  // criei essa const só pra facilitar a forma da gente usar os dados do usario 
-  const user =  data?.data
+  // criei essa const só pra facilitar a forma da gente usar os dados do usario
+  const user = data?.data;
   // name,
   // sexo,
   // email,
@@ -54,105 +56,86 @@ export default function Component() {
   // anamnese,
 
   useEffect(() => {
-    function setContext(){
-      if(user === undefined){
-        console.log('oi')
-      }else{
+    function setContext() {
+      if (user === undefined) {
+        console.log('oi');
+      } else {
         setUserInfo(user);
       }
     }
-   setContext();
+    setContext();
   }, [user]);
-
-  
- 
-
 
   function Naologado() {
     return (
-      <div >
-        <NotLogged/>
+      <div>
+        <NotLogged />
       </div>
-    )
+    );
   }
 
   function LogadoComConta() {
     return (
       <>
-        <LoggedRegistered/>
+        <LoggedRegistered />
       </>
-    )
+    );
   }
 
   function LogadoSemConta() {
     return (
-      <div> 
-        <NotRegistered 
-          emailGoogle={`${session?.user.email}`} 
-          avatarGoogle={`${session?.user.image}`} 
-          />
+      <div>
+        <NotRegistered
+          emailGoogle={`${session?.user.email}`}
+          avatarGoogle={`${session?.user.image}`}
+        />
       </div>
-      
-    )
+    );
   }
-  
 
   return (
     <>
-       {user
-       ? 
-       <Header 
+      {user ? (
+        <Header
           nameMedico={`${user?.name}`}
           nameClinic={`${user?.clinicName} -`}
-        /> 
-        : 
-        <Header 
-        nameMedico=""
-        nameClinic=""
-      />}
-        <div className="main">
-          <Menu
-            options={["Lista de Pacientes", "Cadastro"]}
-          />
-          <div className="mainArea">
+        />
+      ) : (
+        <Header nameMedico="" nameClinic="" />
+      )}
+      <div className="main">
+        <Menu options={['Cadastro', 'Lista de Pacientes']} />
+        <div className="mainArea">
           {/* CASO USUARIO NÃO ESTEJA LOGADO */}
-          {!session && !loading && (
-            <Naologado />
-          )}
+          {!session && !loading && <Naologado />}
 
           {/* CASO O USUARIO ESTEJA LOGADO E COM EMAIL NO NOSSO BANCO */}
           {session && data && (
             <>
               <LogadoComConta />
-              
             </>
           )}
 
           {/* CASO O USUARIO ESTEJA LOGADO E NÃO TEM EMAIL NO NOSSO BANCO */}
-          {loggedAccount && (
-            <LogadoSemConta />
-          )}
+          {loggedAccount && <LogadoSemConta />}
 
           {/* ENQUANTO ELE PROCESSA O USUARIO */}
           {loading && (
             <div>
               <h1>CARRENGAOD</h1>
-         
             </div>
           )}
-          </div>
+        </div>
       </div>
     </>
-  )
+  );
 }
-
-
 
 // export default function Home() {
 //   const [showModal, setShowModal] = useState(true)
 
 //   return (
-<div >
+<div>
   <Head>
     <link
       rel="preload"
@@ -222,6 +205,6 @@ export default function Component() {
           </Formik>
         </Modal>
       } */}
-</div >
+</div>;
 //   )
 // }
