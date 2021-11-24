@@ -1,13 +1,48 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { signOut } from "next-auth/client";
 import Head from "next/head";
 import { ModalRegister } from '../ModalRegister';
-import { Formik } from 'formik';
+import axios from 'axios';
 
 import { Wrapper } from './styles';
 
-export const NotRegistered = ({emailGoogle, avatarGoogle}) => {
-    const [showModal, setShowModal] = useState(true);
+export const NotRegistered = ({ emailGoogle, avatarGoogle }) => {
+  const [showModal, setShowModal] = useState(true);
+  const [name, setName] = useState("");
+  const [specialty, setSpecialty] = useState("");
+  const [clinicName, setClinicName] = useState(true);
+  const [activationKey, setActivationKey] = useState(true);
+
+  const handleChangeName = (e) => {
+    console.log(e.target.value);
+    setName(e.target.value);
+  }
+  const handleChangeSpecialty = (e) => {
+    console.log(e.target.value);
+    setSpecialty(e.target.value);
+  }
+  const handleChangeClinicName = (e) => {
+    console.log(e.target.value);
+    setClinicName(e.target.value);
+  }
+  const handleChangeActivationKey = (e) => {
+    console.log(e.target.value);
+    setActivationKey(e.target.value);
+  }
+  const handleSubmit = async (name, specialty, clinicName, activationKey, email, picture) => {
+    await axios.post("http://localhost:3000/api/doctor", {
+      "name": name,
+      "email": email,
+      "clinicName": clinicName,
+      "specialty": specialty,
+      "keyAct": activationKey,
+      "image": picture,
+      "patients": []
+    }).catch((error) => {
+      console.log(error)
+    })
+  }
+
   return (
     <Wrapper>
       <>
@@ -25,7 +60,7 @@ export const NotRegistered = ({emailGoogle, avatarGoogle}) => {
               as="font"
               crossOrigin=""
             />
-            <link 
+            <link
               rel="preload"
               href="/fonts/Poppins/Poppins-Bold.ttf"
               as="font"
@@ -40,52 +75,30 @@ export const NotRegistered = ({emailGoogle, avatarGoogle}) => {
           </Head>
 
           {showModal &&
-            <ModalRegister onClose={() => setShowModal(false)} 
-            title="Registrar o Produto como:" 
-            email={emailGoogle} 
-            avatar={avatarGoogle} 
-            textEmail="Desejo usar outro email"
-            funcEmail={() => signOut()}
+            <ModalRegister onClose={() => setShowModal(false)}
+              title="Registrar o Produto como:"
+              email={emailGoogle}
+              avatar={avatarGoogle}
+              textEmail="Desejo usar outro email"
+              funcEmail={() => signOut()}
             >
-              <Formik
-                initialValues={{
-                  name: "",
-                  specialty: "",
-                  email: "",
-                  clinicalName: "",
-                  activationKey: "",
-                }}
-                onSubmit={(values, actions) => {
-                  setTimeout(() => {
-                    alert(JSON.stringify(values, null, 2));
-                    actions.setSubmitting(false);
-                  }
-                    , 1000);
-                }}
-              >
-                {props => (
-                  <form onSubmit={props.handleSubmit}>
-                    <p>Nome</p>
-                    <input type="text" id="InputName" placeholder="Nome" />
-                    <p>Especialidade</p>
-                    <input type="text" id="InputSpecialty" placeholder="Especialidade" />
-                    {/* <p>E-mail</p>
-                    <input type="text" id="InputEmail" placeholder={session?.user.email} /> */}
-                    <p>Nome da Clinica</p>
-                    <input type="text" id="InputClinicName" placeholder="Nome da Clinica" />
-                    <p>Chave de Ativação</p>
-                    <input type="text" id="InputActivationKey" placeholder="XXXX-XXXX-XXXX-XXXXX" />
-                    <button
-                      type="submit"
-                      id="ButtonSubmitActivation"
-                      onClick={() => setShowModal(false)}
-                    >
-                      Ativar Clinical Solution
-                    </button>
-                  </form>
-                )}
-              </Formik>
-              {/* <button onClick={() => signOut()}>Try another email</button> */}
+              <form>
+                <p>Nome</p>
+                <input type="text" id="InputName" placeholder="Nome" onChange={handleChangeName} />
+                <p>Especialidade</p>
+                <input type="text" id="InputSpecialty" placeholder="Especialidade" onChange={handleChangeSpecialty} />
+                <p>Nome da Clinica</p>
+                <input type="text" id="InputClinicName" placeholder="Nome da Clinica" onChange={handleChangeClinicName} />
+                <p>Chave de Ativação</p>
+                <input type="text" id="InputActivationKey" placeholder="XXXX-XXXX-XXXX-XXXXX" onChange={handleChangeActivationKey} />
+                <button
+                  type="submit"
+                  id="ButtonSubmitActivation"
+                  onClick={() => { handleSubmit(name, specialty, clinicName, activationKey, emailGoogle, avatarGoogle) }}
+                >
+                  Ativar Clinical Solution
+                </button>
+              </form>
             </ModalRegister>
           }
         </div >
