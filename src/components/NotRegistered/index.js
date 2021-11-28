@@ -14,19 +14,15 @@ export const NotRegistered = ({ emailGoogle, avatarGoogle }) => {
   const [activationKey, setActivationKey] = useState(true);
 
   const handleChangeName = (e) => {
-    console.log(e.target.value);
     setName(e.target.value);
   }
   const handleChangeSpecialty = (e) => {
-    console.log(e.target.value);
     setSpecialty(e.target.value);
   }
   const handleChangeClinicName = (e) => {
-    console.log(e.target.value);
     setClinicName(e.target.value);
   }
   const handleChangeActivationKey = (e) => {
-    console.log(e.target.value);
     setActivationKey(e.target.value);
   }
   const handleSubmit = async (name, specialty, clinicName, activationKey, email, picture) => {
@@ -39,7 +35,7 @@ export const NotRegistered = ({ emailGoogle, avatarGoogle }) => {
       "image": picture,
       "patients": []
     }).catch((error) => {
-      console.log(error)
+      return error;
     })
   }
 

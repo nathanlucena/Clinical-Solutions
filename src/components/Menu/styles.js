@@ -13,9 +13,9 @@ export const Wrapper = styled.div`
 `;
 
 export const Line = styled.div`
- width: 90%;
- border-bottom: 1px solid #48F077;
- margin-left: 5%;
+  width: 90%;
+  border-bottom: 1px solid #48F077;
+  margin-left: 5%;
 `;
 
 
@@ -29,9 +29,9 @@ export const Option = styled.div`
   padding-left: 5%;
   background: ${props => props.active ? "#48F077" : ""};
 
-  &:Hover{
+  &:hover{
     background: #48F077;
-    box-shadow: #121212 0 0 0 1px, transparent 0 0 0 0;
+    box-shadow: 0px 0px 0px 1px rgba(29, 102, 49, 0.6) ;
   }
   
   &.active {

@@ -61,7 +61,6 @@ export default async (req, res) => {
         },
       ],
     };
-    console.log(patients);
     await db
       .collection('Doctor')
       .updateOne(

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Head from 'next/head';
+import ReactLoading from 'react-loading';
 import { Header } from '../src/components/header/';
 import { Menu } from '../src/components/menu/';
 import userContext from '../src/contexts/userContext';
@@ -19,7 +20,7 @@ import { NotRegistered } from '../src/components/NotRegistered';
 import { LoggedRegistered } from '../src/components/LoggedRegistered';
 //import { Loader } from '../src/components/Loader/';
 
-export default function Component() {
+export default function Component({ type, color }) {
   // State criado pra ser o "LOGADO COM O GOOGLE, MAS SEM CONTA NO NOSSO SITE"
   const [loggedAccount, setLoggedAccount] = useState(false);
 
@@ -58,7 +59,7 @@ export default function Component() {
   useEffect(() => {
     function setContext() {
       if (user === undefined) {
-        console.log('oi');
+        console.log('User not set');
       } else {
         setUserInfo(user);
       }
@@ -121,9 +122,28 @@ export default function Component() {
 
           {/* ENQUANTO ELE PROCESSA O USUARIO */}
           {loading && (
-            <div>
-              <h1>CARRENGAOD</h1>
-            </div>
+              <div style={{
+                display:"flex", 
+                position: "absolute", 
+                flexDirection: "column", 
+                justifyContent: "center",
+                alignItems: "center", 
+                top: 0, 
+                left: 0, 
+                zIndex: 5000, 
+                height: "100%",
+                width: "100%", 
+                backgroundColor: "rgba(0, 0, 0, 0.22)"
+              }}>
+                <ReactLoading type="spin" color="#ffffff" height={"20%"} width={"20%"} />
+                <span style={{
+                  display: 'flex',
+                  position: "relative", 
+                  color: '#ffffff', 
+                  fontSize: 30, 
+                  top: "20%"
+                }}>Carregando...</span>
+              </div>
           )}
         </div>
       </div>

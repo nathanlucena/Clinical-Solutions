@@ -13,20 +13,19 @@ export const ListPatients = ({ active }) => {
     await axios
       .get('http://localhost:3000/api/doctor/' + email)
       .then((response) => {
-        let x = response;
-        console.log(x.data.patients);
-        if (listP !== x.data.patients) {
-          setListP(x.data.patients);
+        let resp = response;
+        if (listP !== resp.data.patients) {
+          setListP(resp.data.patients);
         }
       })
       .catch((e) => {
-        console.log(e);
+        return e;
       });
   };
 
   useEffect(() => {
     getBanco();
-  }, []);
+  }, [listP]);
 
   function genderImage(gender) {
     if (gender === 'F') {

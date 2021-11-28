@@ -11,8 +11,8 @@ export const LoggedRegistered = ({ active }) => {
 
   return (
     <Wrapper>
-      {/* <RegisterPatient/> */}
-      <ListPatients />
+      <RegisterPatient/> 
+      {/* <ListPatients /> */}
     </Wrapper>
   );
 };
