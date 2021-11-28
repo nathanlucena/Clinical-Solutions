@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState, useCallback } from 'react';
 import userContext from '../../contexts/userContext';
+import listContext from '../../contexts/listContext';
 import Image from 'next/image';
 import maleImg from '../../assets/images/homem.png';
 import femaleImg from '../../assets/images/mulher.png';
@@ -9,20 +10,10 @@ import { Wrapper, Card } from './styles';
 
 export const ListPatients = ({ active }) => {
   const { userInfo } = useContext(userContext);
-  const { setAtualPatient } = useContext(patientContext);
-  const [listP, setListP] = useState([]);
-  const [email, setEmail] = useState(userInfo.email);
+  //const { setAtualPatient } = useContext(patientContext);
+  const { listPatients } = useContext(listContext);
 
-  const getBanco = async (email) => {
-    const response = await axios.get(
-      'http://localhost:3000/api/doctor/' + email
-    );
-    let resp = response;
-    console.log(resp.data?.patients);
-    if (listP !== resp.data?.patients) {
-      setListP(resp.data?.patients);
-    }
-  }
+  const [email, setEmail] = useState(userInfo.email);
 
   function ageFunc(age) {
     return 2021 - parseInt(age.substr(6));
@@ -35,8 +26,10 @@ export const ListPatients = ({ active }) => {
         <input type="text" />
       </div>
       <div className="patient-list-grid">
-        {listP !== [] && listP !== undefined && listP !== null
-          ? listP.map((item) => {
+        {listPatients !== [] &&
+        listPatients !== undefined &&
+        listPatients !== null
+          ? listPatients.map((item) => {
               return (
                 <div key={item.rg} className="block-cards">
                   <Card onClick={() => setAtualPatient(item)}>

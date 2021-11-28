@@ -1,15 +1,17 @@
 import React, { useContext, useState } from 'react';
 import menuContext from '../../contexts/menuContext';
 import userContext from '../../contexts/userContext';
+import listContext from '../../contexts/listContext';
 import { Wrapper, Option, Line } from './styles';
-import axios from 'axios'
+import axios from 'axios';
 
 export const Menu = (options) => {
-  const { userInfo } = useContext(userContext);
-  const [clicked, setClicked] = useState("");
+  const [clicked, setClicked] = useState('');
   const [listP, setListP] = useState([]);
 
   const { setMenuOption } = useContext(menuContext);
+  const { userInfo } = useContext(userContext);
+  const { setListPatients } = useContext(listContext);
 
   function handleClick(i) {
     if (i !== clicked) {
@@ -19,24 +21,25 @@ export const Menu = (options) => {
 
   const optionsArray = options.options;
 
-  const getBanco = async (email)=> {
+  const getBanco = async (email) => {
     const response = await axios.get(
       'http://localhost:3000/api/doctor/' + email
     );
     let resp = response;
     console.log(resp.data?.patients);
     if (listP !== resp.data?.patients) {
-      setListP(resp.data?.patients);
+      setListPatients(resp.data?.patients);
     }
-  }
+  };
 
   const handleList = (option) => {
-    if(clicked!==option){
-      if (option === "Lista de Pacientes") {
-        getBanco(userInfo.email)
+    console.log(userInfo.email);
+    if (clicked !== option) {
+      if (option === 'Lista de Pacientes') {
+        getBanco(userInfo.email);
       }
     }
-  }
+  };
 
   return (
     <Wrapper>
@@ -45,12 +48,13 @@ export const Menu = (options) => {
           <Option
             style={
               i === clicked
-                ? { backgroundColor: '#48F077', }
-                : { backgroundColor: '', }}
+                ? { backgroundColor: '#48F077' }
+                : { backgroundColor: '' }
+            }
             onClick={() => {
-              handleClick(i)
-              setMenuOption(i)
-              handleList(i)
+              handleClick(i);
+              setMenuOption(i);
+              handleList(i);
             }}
           >
             {i}
