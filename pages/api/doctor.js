@@ -51,13 +51,13 @@ export default async (req, res) => {
       phone: patients[0].phone,
       convenio: patients[0].convenio,
       anamnese: patients[0].anamnese,
-      adress: [
+      address: [
         {
-          cep: patients[0].adress.cep,
-          street: patients[0].adress.street,
-          number: patients[0].adress.number,
-          state: patients[0].adress.state,
-          district: patients[0].adress.district,
+          cep: patients[0].address.cep,
+          street: patients[0].address.street,
+          number: patients[0].address.number,
+          state: patients[0].address.state,
+          district: patients[0].address.district,
         },
       ],
     };

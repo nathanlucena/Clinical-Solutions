@@ -1,6 +1,7 @@
-import { Formik } from 'formik';
 import React, { useContext, useState } from 'react';
 import userContext from '../../contexts/userContext';
+import axios from 'axios';
+import ReactLoading from 'react-loading';
 
 import { Wrapper, Option, Left, Right, DoubleInput, DivInput, ButtonDiv } from './styles';
 
@@ -38,20 +39,21 @@ export const RegisterPatient = ({ active, emailGoogle, avatarGoogle }) => {
   const { userInfo } = useContext(userContext);
   const user = userInfo;
   const [name, setName] = useState("")
-  const [sex, setSex] = useState("")
+  const [sex, setSex] = useState("M")
   const [birthday, setBirthday] = useState("")
   const [email, setEmail] = useState("")
   const [rg, setRg] = useState("")
   const [cpf, setCpf] = useState("")
-  const [maritalStatus, setMaritalStatus] = useState("")
+  const [maritalStatus, setMaritalStatus] = useState("Solteiro")
   const [profession, setProfession] = useState("")
   const [healthInsurance, setHealthInsurance] = useState("")
   const [street, setStreet] = useState("")
   const [number, setNumber] = useState("")
   const [cep, setCep] = useState("")
-  const [state, setState] = useState("")
+  const [state, setState] = useState("AC")
   const [cellphone, setCellphone] = useState("")
   const [neighborhood, setNeighborhood] = useState("")
+  const [loading, setLoading] = useState(false)
 
   const handleChangeName = (e) => {
     setName(e.target.value);
@@ -100,7 +102,8 @@ export const RegisterPatient = ({ active, emailGoogle, avatarGoogle }) => {
     setNeighborhood(e.target.value);
   }
 
-  const CreatePatient = async () => {
+  const CreatePatient = async (name, sex, email, birthday, cpf, rg, maritalStatus, profession, cellphone, healthInsurance, cep, street, number, neighborhood, state) => {
+    console.log(user.email)
     if ((name !== "" && sex !== "" && email !== "" && birthday !== "" && cpf !== "" && rg !== ""
       && maritalStatus !== "" && profession !== "" && cellphone !== "" && healthInsurance !== ""
       && cep !== "" && street !== "" && number !== "" && state !== "" && neighborhood !== "") &&
@@ -111,30 +114,33 @@ export const RegisterPatient = ({ active, emailGoogle, avatarGoogle }) => {
         && cpf !== undefined && rg !== undefined && maritalStatus !== undefined && profession !== undefined
         && cellphone !== undefined && healthInsurance !== undefined && cep !== undefined && street !== undefined
         && number !== undefined && state !== undefined && neighborhood !== undefined)) {
-      await axios.post("http://localhost:3000/api/doctor", {
-        email: emailGoogle,
-        patients: [{
-          name: name,
-          sexo: sex,
-          email: email,
-          birthDate: birthday,
-          cpf: cpf,
-          cpf: cpf,
-          rg: rg,
-          status: maritalStatus,
-          profession: profession,
-          phone: cellphone,
-          convenio: healthInsurance,
-          anamnese: "",
-          address: {
-            cep: cep,
-            street: street,
-            number: number,
-            state: state,
-            district: neighborhood
+      setLoading(true);
+      await axios.put("http://localhost:3000/api/doctor", {
+        "email": user.email,
+        "patients": [{
+          "name": name,
+          "sexo": sex,
+          "email": email,
+          "birthDate": birthday,
+          "cpf": cpf,
+          "rg": rg,
+          "status": maritalStatus,
+          "profession": profession,
+          "phone": cellphone,
+          "convenio": healthInsurance,
+          "anamnese": "",
+          "address": {
+            "cep": cep,
+            "street": street,
+            "number": number,
+            "state": state,
+            "district": neighborhood
           }
         }]
-      }).catch(error=>{
+      }).then(() => {
+        setLoading(false);
+      }).catch(error => {
+        setLoading(false);
         return error;
       })
     } else {
@@ -144,6 +150,30 @@ export const RegisterPatient = ({ active, emailGoogle, avatarGoogle }) => {
 
   return (
     <Wrapper>
+      {loading && (
+        <div style={{
+          display: "flex",
+          position: "absolute",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          top: 0,
+          left: 0,
+          zIndex: 5000,
+          height: "100%",
+          width: "100%",
+          backgroundColor: "rgba(0, 0, 0, 0.22)"
+        }}>
+          <ReactLoading type="spin" color="#ffffff" height={"20%"} width={"20%"} />
+          <span style={{
+            display: 'flex',
+            position: "relative",
+            color: '#ffffff',
+            fontSize: 30,
+            top: "20%"
+          }}>Carregando...</span>
+        </div>
+      )}
       <Left>
         <DivInput>
           <p>Nome</p>
@@ -241,7 +271,23 @@ export const RegisterPatient = ({ active, emailGoogle, avatarGoogle }) => {
           <button
             id="submitBnt"
             type="submit"
-            onClick={()=>CreatePatient()}
+            onClick={() => CreatePatient(
+              name,
+              sex,
+              email,
+              birthday,
+              cpf,
+              rg,
+              maritalStatus,
+              profession,
+              cellphone,
+              healthInsurance,
+              cep,
+              street,
+              number,
+              neighborhood,
+              state
+            )}
           >
             Registrar paciente
           </button>

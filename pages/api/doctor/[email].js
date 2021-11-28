@@ -19,7 +19,7 @@ export default async (req, res) => {
     //     profession,
     //     phone,
     //     convenio,
-    //     adress,
+    //     address,
     //     anamnese,
     //   } = req.body;
 

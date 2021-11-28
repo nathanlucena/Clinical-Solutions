@@ -10,6 +10,7 @@ import { Wrapper, Card } from './styles';
 export const ListPatients = ({ active }) => {
   const { userInfo } = useContext(userContext);
   const [listP, setListP] = useState([]);
+  const [email, setEmail] = useState(userInfo.email);
 
   async function getBanco(email) {
     const response = await axios.get(
@@ -23,7 +24,13 @@ export const ListPatients = ({ active }) => {
   }
 
   useEffect(() => {
-    getBanco(userInfo?.email);
+    if(userInfo.email!== email){
+      setEmail(userInfo.email)
+    }
+  },[userInfo])
+
+  useEffect(() => {
+      getBanco(email);
   }, []);
 
   function ageFunc(age) {
@@ -32,29 +39,33 @@ export const ListPatients = ({ active }) => {
 
   return (
     <Wrapper>
-      <div className="aa">
+      <div className="search-bar">
         <h1>Buscar pacientes</h1>
         <input type="text" />
       </div>
-      {listP !== [] && listP !== undefined && listP !== null
-        ? listP.map((item) => {
+      <div className="patient-list-grid">
+        {listP !== [] && listP !== undefined && listP !== null
+          ? listP.map((item) => {
             return (
               <div key={item.rg} className="block-cards">
                 <Card>
-                  {item.sexo === 'F' ? (
-                    <Image src={maleImg} alt="female" />
-                  ) : (
-                    <Image src={femaleImg} alt="male" />
-                  )}
-                  <div>
-                    <h1>{item.name}</h1>
-                    <h3>{ageFunc(item.birthDate)} Anos</h3>
+                  <div className="container-profile">
+                    {item.sexo === 'M' ? (
+                      <Image className="profile-pic" src={maleImg} alt="female" />
+                    ) : (
+                      <Image className="profile-pic" src={femaleImg} alt="male" />
+                    )}
+                    <div>
+                      <h1>{item.name}</h1>
+                      <h3>{ageFunc(item.birthDate)} Anos</h3>
+                    </div>
                   </div>
                 </Card>
               </div>
             );
           })
-        : null}
+          : null}
+      </div>
     </Wrapper>
   );
 };
