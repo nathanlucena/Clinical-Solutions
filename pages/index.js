@@ -38,6 +38,7 @@ export default function Component({ type, color }) {
   // Então da pra testar emails que ja estão no nosso banco de boa, já que a ideia do site não deixa ninguém logado
   // Resumidamente por enquanto se tu quiser testar o "loggedAccount" tu tem que comentar todo o conteúdo que envolve o "data"
   useEffect(() => {
+    console.log("teste 4")
     if (session?.user.email !== data?.data.email) setLoggedAccount(true);
   }, [data]);
 

@@ -28,6 +28,7 @@ export default function Component() {
   const user = data?.data;
 
   useEffect(() => {
+    console.log("teste 5")
     function setContext() {
       if (user === undefined) {
         console.log('oi');

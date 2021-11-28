@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useCallback } from 'react';
 import userContext from '../../contexts/userContext';
 import Image from 'next/image';
 import maleImg from '../../assets/images/homem.png';
@@ -32,6 +32,7 @@ export const ListPatients = ({ active }) => {
     if (listP !== resp.data?.patients) {
       setListP(resp.data?.patients);
     }
+  },[])
   };
 
   useEffect(() => {
