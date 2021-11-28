@@ -122,28 +122,39 @@ export default function Component({ type, color }) {
 
           {/* ENQUANTO ELE PROCESSA O USUARIO */}
           {loading && (
-              <div style={{
-                display:"flex", 
-                position: "absolute", 
-                flexDirection: "column", 
-                justifyContent: "center",
-                alignItems: "center", 
-                top: 0, 
-                left: 0, 
-                zIndex: 5000, 
-                height: "100%",
-                width: "100%", 
-                backgroundColor: "rgba(0, 0, 0, 0.22)"
-              }}>
-                <ReactLoading type="spin" color="#ffffff" height={"20%"} width={"20%"} />
-                <span style={{
+            <div
+              style={{
+                display: 'flex',
+                position: 'absolute',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                top: 0,
+                left: 0,
+                zIndex: 5000,
+                height: '100%',
+                width: '100%',
+                backgroundColor: 'rgba(0, 0, 0, 0.22)',
+              }}
+            >
+              <ReactLoading
+                type="spin"
+                color="#ffffff"
+                height={'20%'}
+                width={'20%'}
+              />
+              <span
+                style={{
                   display: 'flex',
-                  position: "relative", 
-                  color: '#ffffff', 
-                  fontSize: 30, 
-                  top: "20%"
-                }}>Carregando...</span>
-              </div>
+                  position: 'relative',
+                  color: '#ffffff',
+                  fontSize: 30,
+                  top: '20%',
+                }}
+              >
+                Carregando...
+              </span>
+            </div>
           )}
         </div>
       </div>

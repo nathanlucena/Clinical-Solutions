@@ -9,10 +9,21 @@ import { Wrapper, Card } from './styles';
 
 export const ListPatients = ({ active }) => {
   const { userInfo } = useContext(userContext);
+  const { setAtualPatient } = useContext(patientContext);
   const [listP, setListP] = useState([]);
   const [email, setEmail] = useState(userInfo.email);
 
-  async function getBanco(email) {
+  // async function getBanco(email) {
+  //   const response = await axios.get(
+  //     'http://localhost:3000/api/doctor/' + email
+  //   );
+  //   let resp = response;
+  //   console.log(resp.data?.patients);
+  //   if (listP !== resp.data?.patients) {
+  //     setListP(resp.data?.patients);
+  //   }
+  // }
+  const getBanco = async (email) => {
     const response = await axios.get(
       'http://localhost:3000/api/doctor/' + email
     );
@@ -21,16 +32,10 @@ export const ListPatients = ({ active }) => {
     if (listP !== resp.data?.patients) {
       setListP(resp.data?.patients);
     }
-  }
+  };
 
   useEffect(() => {
-    if(userInfo.email!== email){
-      setEmail(userInfo.email)
-    }
-  },[userInfo])
-
-  useEffect(() => {
-      getBanco(email);
+    getBanco(email);
   }, []);
 
   function ageFunc(age) {
@@ -46,24 +51,32 @@ export const ListPatients = ({ active }) => {
       <div className="patient-list-grid">
         {listP !== [] && listP !== undefined && listP !== null
           ? listP.map((item) => {
-            return (
-              <div key={item.rg} className="block-cards">
-                <Card>
-                  <div className="container-profile">
-                    {item.sexo === 'M' ? (
-                      <Image className="profile-pic" src={maleImg} alt="female" />
-                    ) : (
-                      <Image className="profile-pic" src={femaleImg} alt="male" />
-                    )}
-                    <div>
-                      <h1>{item.name}</h1>
-                      <h3>{ageFunc(item.birthDate)} Anos</h3>
+              return (
+                <div key={item.rg} className="block-cards">
+                  <Card onClick={() => setAtualPatient(item)}>
+                    <div className="container-profile">
+                      {item.sexo === 'M' ? (
+                        <Image
+                          className="profile-pic"
+                          src={maleImg}
+                          alt="female"
+                        />
+                      ) : (
+                        <Image
+                          className="profile-pic"
+                          src={femaleImg}
+                          alt="male"
+                        />
+                      )}
+                      <div>
+                        <h1>{item.name}</h1>
+                        <h3>{ageFunc(item.birthDate)} Anos</h3>
+                      </div>
                     </div>
-                  </div>
-                </Card>
-              </div>
-            );
-          })
+                  </Card>
+                </div>
+              );
+            })
           : null}
       </div>
     </Wrapper>

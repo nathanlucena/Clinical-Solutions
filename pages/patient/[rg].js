@@ -1,19 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useRouter } from 'next/router';
-
-// O SWR que vai salvar os dados do nosso usario
 import useSWR from 'swr';
-
-// Importando a função do axios que vai ver se existe um dado igual ao email logado pelo google
-
-// O next-auth é a lib responsavel pelo login do google
-// Botao pra singOut   <button onClick={() => signOut()}>singOut</button>
-// Botao pra singIn  <button onClick={() => signIn('auth0')}>Sign in</button>
 import { useSession } from 'next-auth/client';
 import { Header } from '../../src/components/header';
 import { Menu } from '../../src/components/Menu';
 import userContext from '../../src/contexts/userContext';
 import AxiosLogged from '../../utils/api';
+import { PatientActual } from '../../src/components/PatientActual';
 
 export default function Component() {
   const [loggedAccount, setLoggedAccount] = useState(false);
@@ -57,10 +50,9 @@ export default function Component() {
       )}
       <div className="main">
         <Menu options={['Cadastro', 'Lista de Pacientes']} />
-        <h1>{router.query.rg}</h1>
-        <h1>{router.query.rg}</h1>
-        <h1>{router.query.rg}</h1>
-        <h1>{router.query.rg}</h1>
+        <div>
+          <PatientActual />
+        </div>
       </div>
     </>
   );
