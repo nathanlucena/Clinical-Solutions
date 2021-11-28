@@ -1,18 +1,22 @@
 import React, { useContext } from 'react';
-import userContext from '../../contexts/userContext';
+import menuContext from '../../contexts/menuContext';
 import { ListPatients } from '../ListPatients';
 import { RegisterPatient } from '../RegisterPatient';
 
-import { Wrapper, Option } from './styles';
+import { Wrapper } from './styles';
 
 export const LoggedRegistered = ({ active }) => {
-  const { userInfo } = useContext(userContext);
-  const user = userInfo;
+  const { menuOption } = useContext(menuContext);
 
   return (
     <Wrapper>
-      <RegisterPatient/> 
-      {/* <ListPatients /> */}
+      {menuOption === 'Cadastro' ? (
+        <RegisterPatient />
+      ) : menuOption === 'Lista de Pacientes' ? (
+        <ListPatients />
+      ) : (
+        '1'
+      )}
     </Wrapper>
   );
 };
