@@ -13,16 +13,6 @@ export const ListPatients = ({ active }) => {
   const [listP, setListP] = useState([]);
   const [email, setEmail] = useState(userInfo.email);
 
-  // async function getBanco(email) {
-  //   const response = await axios.get(
-  //     'http://localhost:3000/api/doctor/' + email
-  //   );
-  //   let resp = response;
-  //   console.log(resp.data?.patients);
-  //   if (listP !== resp.data?.patients) {
-  //     setListP(resp.data?.patients);
-  //   }
-  // }
   const getBanco = async (email) => {
     const response = await axios.get(
       'http://localhost:3000/api/doctor/' + email
@@ -32,12 +22,7 @@ export const ListPatients = ({ active }) => {
     if (listP !== resp.data?.patients) {
       setListP(resp.data?.patients);
     }
-  },[])
-  };
-
-  useEffect(() => {
-    getBanco(email);
-  }, []);
+  }
 
   function ageFunc(age) {
     return 2021 - parseInt(age.substr(6));
