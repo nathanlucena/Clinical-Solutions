@@ -3,7 +3,7 @@ import styled from 'styled-components';
 // Create a Wrapper component that'll render a <section> tag with some styles
 export const Wrapper = styled.div`
   height: 100vh;
-  min-width: 15rem;
+  min-width: 14rem;
   background: #b5f9c8;
   padding-top: 4rem;
   display: flex;

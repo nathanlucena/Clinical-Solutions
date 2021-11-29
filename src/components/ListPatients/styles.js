@@ -8,6 +8,7 @@ export const Wrapper = styled.div`
   .patient-list-grid{
     display: grid;
     grid-template-columns: 24% 24% 24% 24%;
+    grid-template-rows: 26% auto;
     margin-top: 35px;
     margin-bottom: 85px;
     overflow: auto;

@@ -6,7 +6,7 @@ export const Wrapper = styled.div`
   padding-top: 50px;
   flex-direction: row;
   margin-left: -10% !important;  
-  margin-top: -2.5% !important;  
+  margin-top: -3%!important;  
   justify-content: space-between;
   font-weight: 600;
   color: #1D6631;

@@ -15,7 +15,7 @@ export const LoggedRegistered = ({ active }) => {
       ) : menuOption === 'Lista de Pacientes' ? (
         <ListPatients />
       ) : (
-        '1'
+        ''
       )}
     </Wrapper>
   );
