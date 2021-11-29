@@ -22,7 +22,6 @@ export const ListPatients = ({ active }) => {
   return (
     <Wrapper>
       <div className="search-bar">
-        <h1>Buscar pacientes</h1>
         <input type="text" />
       </div>
       <div className="patient-list-grid">
@@ -32,24 +31,28 @@ export const ListPatients = ({ active }) => {
           ? listPatients.map((item) => {
               return (
                 <div key={item.rg} className="block-cards">
-                  <Card onClick={() => setAtualPatient(item)}>
+                  <Card /* onClick={() => setAtualPatient(item)} */>
                     <div className="container-profile">
                       {item.sexo === 'M' ? (
-                        <Image
-                          className="profile-pic"
-                          src={maleImg}
-                          alt="female"
-                        />
+                        <div className="profile-pic">
+                          <Image
+                            src={maleImg}
+                            alt="male"
+                            layout="intrinsic"
+                          />
+                        </div>
                       ) : (
-                        <Image
-                          className="profile-pic"
-                          src={femaleImg}
-                          alt="male"
-                        />
+                        <div className="profile-pic">
+                          <Image
+                            src={femaleImg}
+                            alt="female"
+                            layout="intrinsic"
+                          />
+                        </div>
                       )}
-                      <div>
-                        <h1>{item.name}</h1>
-                        <h3>{ageFunc(item.birthDate)} Anos</h3>
+                      <div className="profile-text">
+                        <span className="name-text">{item.name}</span>
+                        <span>{ageFunc(item.birthDate)} Anos</span>
                       </div>
                     </div>
                   </Card>
@@ -58,6 +61,7 @@ export const ListPatients = ({ active }) => {
             })
           : null}
       </div>
+      <span style={{fontSize: '20px'}}>* Escolha o cadastro do paciente desejado</span>
     </Wrapper>
   );
 };
