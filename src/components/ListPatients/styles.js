@@ -4,7 +4,6 @@ import styled from 'styled-components';
 export const Wrapper = styled.div`
   padding-top: 50px;
   color: #1d6631;
-
   .patient-list-grid {
     display: grid;
     grid-template-columns: 24% 24% 24% 24%;
@@ -67,15 +66,11 @@ export const Card = styled.div`
 `;
 
 export const InputDiv = styled.div`
-  height: 10vh;
-  width: 300px;
   display: flex;
   align-items: center;
-  border-bottom: 5px #000;
-
-  img {
-    height: 70%;
-  }
+  position: relative;
+  height: 10vh;
+  width: 300px;
 
   input {
     width: 100%;
