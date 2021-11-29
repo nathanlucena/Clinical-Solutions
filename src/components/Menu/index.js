@@ -2,6 +2,8 @@ import React, { useContext, useState } from 'react';
 import menuContext from '../../contexts/menuContext';
 import userContext from '../../contexts/userContext';
 import listContext from '../../contexts/listContext';
+import patientContext from '../../contexts/patientContext';
+import Link from 'next/link';
 import { Wrapper, Option, Line } from './styles';
 import axios from 'axios';
 
@@ -12,6 +14,7 @@ export const Menu = (options) => {
   const { setMenuOption } = useContext(menuContext);
   const { userInfo } = useContext(userContext);
   const { setListPatients } = useContext(listContext);
+  const { actualPatient, setActualPatient } = useContext(patientContext);
 
   function handleClick(i) {
     if (i !== clicked) {
@@ -33,10 +36,9 @@ export const Menu = (options) => {
   };
 
   const handleList = (option) => {
-    console.log(userInfo.email);
     if (clicked !== option) {
       if (option === 'Lista de Pacientes') {
-        getBanco(userInfo.email);
+        getBanco(userInfo?.email);
       }
     }
   };
@@ -45,23 +47,34 @@ export const Menu = (options) => {
     <Wrapper>
       {optionsArray.map((i) => (
         <div key={i}>
-          <Option
-            style={
-              i === clicked
-                ? { backgroundColor: '#48F077' }
-                : { backgroundColor: '' }
-            }
-            onClick={() => {
-              handleClick(i);
-              setMenuOption(i);
-              handleList(i);
-            }}
-          >
-            {i}
-          </Option>
+          <Link href="/">
+            <Option
+              style={
+                i === clicked
+                  ? { backgroundColor: '#48F077' }
+                  : { backgroundColor: '' }
+              }
+              onClick={() => {
+                handleClick(i);
+                setMenuOption(i);
+                handleList(i);
+                setActualPatient('');
+              }}
+            >
+              {i}
+            </Option>
+          </Link>
           <Line />
         </div>
       ))}
+      {actualPatient ? (
+        <>
+          <p>{actualPatient.name}</p>
+          <Line />
+        </>
+      ) : (
+        <p> </p>
+      )}
     </Wrapper>
   );
 };

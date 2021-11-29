@@ -1,19 +1,21 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState, useCallback } from 'react';
 import userContext from '../../contexts/userContext';
+import patientContext from '../../contexts/patientContext';
 import listContext from '../../contexts/listContext';
 import Image from 'next/image';
 import maleImg from '../../assets/images/homem.png';
 import femaleImg from '../../assets/images/mulher.png';
+import Link from 'next/link';
 
 import { Wrapper, Card } from './styles';
 
 export const ListPatients = ({ active }) => {
   const { userInfo } = useContext(userContext);
-  //const { setAtualPatient } = useContext(patientContext);
+  const { setActualPatient } = useContext(patientContext);
   const { listPatients } = useContext(listContext);
 
-  const [email, setEmail] = useState(userInfo.email);
+  const [email, setEmail] = useState(userInfo?.email);
 
   function ageFunc(age) {
     return 2021 - parseInt(age.substr(6));
@@ -30,38 +32,42 @@ export const ListPatients = ({ active }) => {
         listPatients !== null
           ? listPatients.map((item) => {
               return (
-                <div key={item.rg} className="block-cards">
-                  <Card /* onClick={() => setAtualPatient(item)} */>
-                    <div className="container-profile">
-                      {item.sexo === 'M' ? (
-                        <div className="profile-pic">
-                          <Image
-                            src={maleImg}
-                            alt="male"
-                            layout="intrinsic"
-                          />
+                <Link href={'patient/' + item.rg}>
+                  <div key={item.rg} className="block-cards">
+                    <Card onClick={() => setActualPatient(item)}>
+                      <div className="container-profile">
+                        {item.sexo === 'M' ? (
+                          <div className="profile-pic">
+                            <Image
+                              src={maleImg}
+                              alt="male"
+                              layout="intrinsic"
+                            />
+                          </div>
+                        ) : (
+                          <div className="profile-pic">
+                            <Image
+                              src={femaleImg}
+                              alt="female"
+                              layout="intrinsic"
+                            />
+                          </div>
+                        )}
+                        <div className="profile-text">
+                          <span className="name-text">{item.name}</span>
+                          <span>{ageFunc(item.birthDate)} Anos</span>
                         </div>
-                      ) : (
-                        <div className="profile-pic">
-                          <Image
-                            src={femaleImg}
-                            alt="female"
-                            layout="intrinsic"
-                          />
-                        </div>
-                      )}
-                      <div className="profile-text">
-                        <span className="name-text">{item.name}</span>
-                        <span>{ageFunc(item.birthDate)} Anos</span>
                       </div>
-                    </div>
-                  </Card>
-                </div>
+                    </Card>
+                  </div>
+                </Link>
               );
             })
           : null}
       </div>
-      <span style={{fontSize: '20px'}}>* Escolha o cadastro do paciente desejado</span>
+      <span style={{ fontSize: '20px' }}>
+        * Escolha o cadastro do paciente desejado
+      </span>
     </Wrapper>
   );
 };

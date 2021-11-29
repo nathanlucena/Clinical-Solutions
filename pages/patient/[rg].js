@@ -7,6 +7,8 @@ import { Menu } from '../../src/components/Menu';
 import userContext from '../../src/contexts/userContext';
 import AxiosLogged from '../../utils/api';
 import { PatientActual } from '../../src/components/PatientActual';
+import patientContext from '../../src/contexts/patientContext';
+import { Wrapper } from './styles';
 
 export default function Component() {
   const [loggedAccount, setLoggedAccount] = useState(false);
@@ -20,6 +22,7 @@ export default function Component() {
   );
 
   const { setUserInfo } = useContext(userContext);
+  const { actualPatient } = useContext(patientContext);
 
   useEffect(() => {
     if (session?.user.email !== data?.data.email) setLoggedAccount(true);
@@ -28,7 +31,6 @@ export default function Component() {
   const user = data?.data;
 
   useEffect(() => {
-    console.log("teste 5")
     function setContext() {
       if (user === undefined) {
         console.log('oi');
@@ -51,9 +53,9 @@ export default function Component() {
       )}
       <div className="main">
         <Menu options={['Cadastro', 'Lista de Pacientes']} />
-        <div>
-          <PatientActual />
-        </div>
+        <Wrapper>
+          <h1>{actualPatient?.name}</h1>
+        </Wrapper>
       </div>
     </>
   );

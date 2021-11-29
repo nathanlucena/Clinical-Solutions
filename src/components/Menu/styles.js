@@ -3,13 +3,19 @@ import styled from 'styled-components';
 // Create a Wrapper component that'll render a <section> tag with some styles
 export const Wrapper = styled.div`
   height: 100vh;
-  width: 18rem;
+  min-width: 15rem;
   background: #b5f9c8;
   padding-top: 4rem;
   display: flex;
   flex-direction: column;
   font-weight: 600;
   color: #1d6631;
+
+  p {
+    padding-right: 10%;
+    margin-left: 20%;
+    text-overflow: initial;
+  }
 `;
 
 export const Line = styled.div`

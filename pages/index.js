@@ -4,6 +4,7 @@ import ReactLoading from 'react-loading';
 import { Header } from '../src/components/header/';
 import { Menu } from '../src/components/menu/';
 import userContext from '../src/contexts/userContext';
+import patientContext from '../src/contexts/patientContext';
 
 // O SWR que vai salvar os dados do nosso usario
 import useSWR from 'swr';
@@ -14,10 +15,11 @@ import AxiosLogged from '../utils/api';
 // O next-auth é a lib responsavel pelo login do google
 // Botao pra singOut   <button onClick={() => signOut()}>singOut</button>
 // Botao pra singIn  <button onClick={() => signIn('auth0')}>Sign in</button>
-import { useSession, signIn, signOut } from 'next-auth/client';
+import { useSession } from 'next-auth/client';
 import { NotLogged } from '../src/components/NotLogged';
 import { NotRegistered } from '../src/components/NotRegistered';
 import { LoggedRegistered } from '../src/components/LoggedRegistered';
+
 //import { Loader } from '../src/components/Loader/';
 
 export default function Component({ type, color }) {
@@ -34,11 +36,13 @@ export default function Component({ type, color }) {
   );
 
   const { setUserInfo } = useContext(userContext);
+
+  const { actualPatient } = useContext(patientContext);
   // Esse useEfect tá sendo o problema porque ele que diz se o usuario tá "loggedAccont", mas o if acaba não sendo tão rapido então se ele não tiver conta no nosso banco ele da um erro
   // Então da pra testar emails que ja estão no nosso banco de boa, já que a ideia do site não deixa ninguém logado
   // Resumidamente por enquanto se tu quiser testar o "loggedAccount" tu tem que comentar todo o conteúdo que envolve o "data"
   useEffect(() => {
-    console.log("teste 4")
+    console.log('teste 4');
     if (session?.user.email !== data?.data.email) setLoggedAccount(true);
   }, [data]);
 

@@ -10,36 +10,12 @@ export default function App({ Component, pageProps }) {
   const [userInfo, setUserInfo] = useState();
   const [menuOption, setMenuOption] = useState();
   const [listPatients, setListPatients] = useState();
-  const [actualPatient, setAtualPatient] = useState({
-    email: 'juliaodacunha@gmail.com',
-    patients: [
-      {
-        name: 'Fernana rodrigues',
-        sexo: 'M',
-        email: 'fernandaaa@.com',
-        birthDate: '12/05/2000',
-        cpf: '12332132145',
-        rg: '14',
-        status: 'solteiro',
-        profession: 'Desenvolvedor',
-        phone: '81912344321',
-        convenio: 'UNIFG',
-        anamnese: 'a',
-        adress: {
-          cep: '55760000',
-          street: 'Rua da manguerinha',
-          number: '69',
-          state: 'PE',
-          district: 'Gaibu',
-        },
-      },
-    ],
-  });
+  const [actualPatient, setActualPatient] = useState();
 
   return (
     <Provider session={pageProps.session}>
       <menuContext.Provider value={{ menuOption, setMenuOption }}>
-        <patientContext.Provider value={{ actualPatient, setAtualPatient }}>
+        <patientContext.Provider value={{ actualPatient, setActualPatient }}>
           <userContext.Provider value={{ userInfo, setUserInfo }}>
             <listContext.Provider value={{ listPatients, setListPatients }}>
               <Component {...pageProps} />
