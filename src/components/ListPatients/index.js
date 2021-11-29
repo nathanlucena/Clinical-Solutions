@@ -7,8 +7,9 @@ import Image from 'next/image';
 import maleImg from '../../assets/images/homem.png';
 import femaleImg from '../../assets/images/mulher.png';
 import Link from 'next/link';
+import lupa from '../../assets/images/Lupa.svg';
 
-import { Wrapper, Card } from './styles';
+import { Wrapper, Card, InputDiv } from './styles';
 
 export const ListPatients = ({ active }) => {
   const { userInfo } = useContext(userContext);
@@ -24,7 +25,10 @@ export const ListPatients = ({ active }) => {
   return (
     <Wrapper>
       <div className="search-bar">
-        <input type="text" />
+        <InputDiv>
+          <Image src={lupa} alt="Lupa" />
+          <input type="text" placeholder="Digite aqui..." />
+        </InputDiv>
       </div>
       <div className="patient-list-grid">
         {listPatients !== [] &&

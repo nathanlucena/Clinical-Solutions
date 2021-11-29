@@ -5,7 +5,7 @@ export const Wrapper = styled.div`
   padding-top: 50px;
   color: #1d6631;
 
-  .patient-list-grid{
+  .patient-list-grid {
     display: grid;
     grid-template-columns: 24% 24% 24% 24%;
     grid-template-rows: 26% auto;
@@ -13,12 +13,12 @@ export const Wrapper = styled.div`
     margin-bottom: 85px;
     overflow: auto;
     height: 55vh;
-    &::-webkit-scrollbar{
+    &::-webkit-scrollbar {
       background-color: #ffffff;
-      width: 10px
+      width: 10px;
     }
-    &::-webkit-scrollbar-thumb{
-      background-color: #48F077;
+    &::-webkit-scrollbar-thumb {
+      background-color: #48f077;
       border-radius: 5px;
     }
   }
@@ -37,7 +37,7 @@ export const Card = styled.div`
   border-radius: 15px;
   font-size: 14px;
   background-color: #b5f9c8;
-  .container-profile{
+  .container-profile {
     display: flex;
     flex-direction: row;
   }
@@ -47,14 +47,14 @@ export const Card = styled.div`
     width: 50px;
     height: 50px;
   }
-  .profile-text{
+  .profile-text {
     display: flex;
     flex-direction: column;
     margin-top: -5px;
     height: 50px;
     font-size: 16px;
   }
-  .name-text{
+  .name-text {
     //display: flex;
     width: 100px;
     height: 25px;
@@ -66,3 +66,21 @@ export const Card = styled.div`
   }
 `;
 
+export const InputDiv = styled.div`
+  height: 10vh;
+  width: 300px;
+  display: flex;
+  align-items: center;
+  border-bottom: 5px #000;
+
+  img {
+    height: 70%;
+  }
+
+  input {
+    width: 100%;
+    height: 70%;
+    border: 0px;
+    font-size: 100%;
+  }
+`;
