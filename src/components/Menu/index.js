@@ -12,7 +12,7 @@ export const Menu = (options) => {
   const { userInfo } = useContext(userContext);
   const { setListPatients } = useContext(listContext);
   const { actualPatient, setActualPatient } = useContext(patientContext);
-  
+
   const [clicked, setClicked] = useState('');
 
   const optionsArray = options.options;
@@ -24,12 +24,12 @@ export const Menu = (options) => {
   }
 
   const getBanco = async (email) => {
-    const response = await axios.get(
-      'http://localhost:3000/api/doctor/' + email
-    ).then((response) => {
-      let resp = response;
-      setListPatients(resp.data?.patients);
-    })
+    const response = await axios
+      .get('http://localhost:3000/api/doctor/' + email)
+      .then((response) => {
+        let resp = response;
+        setListPatients(resp.data?.patients);
+      });
   };
 
   const handleList = (option) => {
@@ -69,9 +69,7 @@ export const Menu = (options) => {
           <p>{actualPatient.name}</p>
           <Line />
         </>
-      ) : (
-        <p> </p>
-      )}
+      ) : null}
     </Wrapper>
   );
 };

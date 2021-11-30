@@ -6,6 +6,7 @@ export const Wrapper = styled.div`
   height: 100vh;
   padding-top: 50px;
   font-size: 20px;
+  font-weight: 600;
   color: #1d6631;
   overflow: auto;
 `;
@@ -51,5 +52,28 @@ export const Anamnese = styled.div`
 
   p {
     font-size: 25px;
+  }
+`;
+
+export const BtnDell = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: #48f077;
+  width: 150px;
+  height: 50px;
+  border-radius: 5px;
+  fill: #fff;
+  position: absolute;
+  right: 50px;
+  top: 130px;
+  .icon {
+    font-size: 35px;
+  }
+
+  &:hover {
+    background-color: #1d6631;
+    color: #48f077;
+    cursor: pointer;
   }
 `;

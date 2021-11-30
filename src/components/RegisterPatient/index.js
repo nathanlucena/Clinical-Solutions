@@ -46,7 +46,7 @@ const ufArray = [
   'TO',
 ];
 
-export const RegisterPatient = ({ active, emailGoogle, avatarGoogle }) => {
+export const RegisterPatient = ({}) => {
   const { userInfo } = useContext(userContext);
   const { setMenuOption } = useContext(menuContext);
   const user = userInfo;

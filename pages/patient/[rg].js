@@ -1,29 +1,27 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useRouter } from 'next/router';
 import useSWR from 'swr';
 import { useSession } from 'next-auth/client';
 import { Header } from '../../src/components/header';
 import { Menu } from '../../src/components/Menu';
 import userContext from '../../src/contexts/userContext';
-import menuContext from '../../src/contexts/menuContext';
 import AxiosLogged from '../../utils/api';
 import patientContext from '../../src/contexts/patientContext';
 import Image from 'next/image';
 import maleImg from '../../src/assets/images/homem.png';
 import femaleImg from '../../src/assets/images/mulher.png';
+import trash from '../../src/assets/images/lixo.svg';
 import Link from 'next/link';
 
-import { Wrapper, Infos, Anamnese } from './styles';
+import { Wrapper, Infos, Anamnese, BtnDell } from './styles';
 import axios from 'axios';
+import { IoMdTrash } from 'react-icons/io';
 
 export default function Component() {
   const { setUserInfo, userInfo } = useContext(userContext);
-  const { actualPatient, setActualPatient } = useContext(patientContext);
-  const { setMenuOption } = useContext(menuContext);
+  const { actualPatient } = useContext(patientContext);
 
   const [loggedAccount, setLoggedAccount] = useState(false);
 
-  const router = useRouter();
   const [session, loading] = useSession();
 
   const { data, error } = useSWR(
@@ -38,7 +36,7 @@ export default function Component() {
   const user = data?.data;
 
   useEffect(() => {
-    if(user!==undefined){
+    if (user !== undefined) {
       setUserInfo(user);
     }
   }, [user]);
@@ -130,18 +128,18 @@ export default function Component() {
                 </div>
               </div>
               <Link href="/">
-                <div>
-                  <h1
+                <BtnDell>
+                  <span
                     onClick={() => {
-                      handleDelete();
-                      setMenuOption(' ');
-                      setActualPatient();
+                      // handleDelete();
+                      // setMenuOption(' ');
+                      // setActualPatient();
                     }}
                   >
-                    {' '}
-                    aaaaaa
-                  </h1>
-                </div>
+                    Deletar
+                  </span>
+                  <IoMdTrash className="icon" />
+                </BtnDell>
               </Link>
             </Infos>
 

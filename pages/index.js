@@ -52,6 +52,7 @@ export default function Component({ type, color }) {
       )}
       <div className="main">
         <Menu options={['Cadastro', 'Lista de Pacientes']} />
+
         <div className="mainArea">
           {(!session && !loading) ? <NotLogged /> :
             (session && data) ? <LoggedRegistered /> :

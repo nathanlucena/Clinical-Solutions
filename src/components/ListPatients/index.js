@@ -86,7 +86,7 @@ export const ListPatients = ({ active }) => {
               return (
                 <div key={item.rg} className="block-cards">
                   <Card>
-                    <Link href={'patient/' + item.rg}>
+                    <Link href={'Patient/' + item.rg}>
                       <div
                         className="container-profile"
                         onClick={(e) => {
