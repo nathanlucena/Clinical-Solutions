@@ -1,22 +1,30 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 // Create a Wrapper component that'll render a <section> tag with some styles
 export const Wrapper = styled.div`
   display: flex;
   padding-top: 50px;
   flex-direction: row;
-  margin-left: -10% !important;  
-  margin-top: -3%!important;  
+  margin-left: -10% !important;
+  margin-top: -3% !important;
   justify-content: space-between;
   font-weight: 600;
-  color: #1D6631;
-  p{
-    font-size:14px;
+  color: #1d6631;
+  p {
+    font-size: 14px;
     margin: 0px;
-    padding:0 10px;
+    padding: 0 10px;
   }
-  .street-input{
+  .street-input {
     margin-top: -2.5px !important;
+  }
+
+  .cepDiv {
+    display: flex;
+  }
+
+  img {
+    width: 15px;
   }
 `;
 
@@ -36,20 +44,19 @@ export const Right = styled.div`
 `;
 
 export const DivInput = styled.div`
-
   margin-bottom: 10px;
-  input[type=text]{
+  input[type='text'] {
     width: 500px;
-    height: 40px ;
+    height: 40px;
     border: 1px solid #ccc;
     border-radius: 5px;
     box-sizing: border-box;
-    background-color: #95FAB1;
+    background-color: #95fab1;
     margin-top: 5px;
     padding-left: 10px;
   }
 
-  .radioDiv{
+  .radioDiv {
     width: 500px;
     height: 40px;
     font-size: 14px;
@@ -58,20 +65,19 @@ export const DivInput = styled.div`
     justify-content: space-around;
   }
 
-  
-  select{
+  select {
     width: 500px;
-    height: 40px ;
+    height: 40px;
     border: 1px solid #ccc;
     border-radius: 5px;
     box-sizing: border-box;
-    background-color: #95FAB1;
+    background-color: #95fab1;
     margin-top: 5px;
     padding-left: 10px;
   }
 `;
 
-export const DoubleInput = styled.div` 
+export const DoubleInput = styled.div`
   margin-top: 10px;
   width: 100%;
   display: flex;
@@ -79,38 +85,38 @@ export const DoubleInput = styled.div`
   justify-content: center;
   align-items: center;
   .small {
-    input[type=text]{
+    input[type='text'] {
       width: 100px;
-      height: 40px ;
+      height: 40px;
       border: 1px solid #ccc;
       border-radius: 5px;
       box-sizing: border-box;
-      background-color: #95FAB1;
+      background-color: #95fab1;
       padding-left: 10px;
       margin-top: 5px;
     }
-  
-    select{
+
+    select {
       width: 100px;
-      height: 40px ;
+      height: 40px;
       border: 1px solid #ccc;
       border-radius: 5px;
       box-sizing: border-box;
-      background-color: #95FAB1;
+      background-color: #95fab1;
       margin-top: 5px;
       padding-left: 10px;
     }
-  } 
-  .big{
+  }
+  .big {
     margin-left: 30px;
-    input[type=text]{
+    input[type='text'] {
       margin-top: 5px;
       width: 370px;
-      height: 40px ;
+      height: 40px;
       border: 1px solid #ccc;
       border-radius: 5px;
       box-sizing: border-box;
-      background-color: #95FAB1;
+      background-color: #95fab1;
       padding-left: 10px;
     }
   }
@@ -122,9 +128,9 @@ export const ButtonDiv = styled.div`
   justify-content: space-evenly;
   margin-bottom: 10px;
 
-  button{
+  button {
     font-size: 14px;
-    color: #1D6631;
+    color: #1d6631;
     font-weight: 600;
     border: 0;
     border-radius: 5px;
@@ -134,21 +140,21 @@ export const ButtonDiv = styled.div`
     cursor: pointer;
   }
 
-  #submitBnt{ 
-    background-color: #48F077;
-  
+  #submitBnt {
+    background-color: #48f077;
+
     &:hover {
-      background-color: #1D6631;
-      color: #48F077;
+      background-color: #1d6631;
+      color: #48f077;
     }
   }
 
-  #resetBnt{
-    background-color: #95FAB1;
-    
+  #resetBnt {
+    background-color: #95fab1;
+
     &:hover {
-      background-color: #1D6631;
-      color: #48F077;
+      background-color: #1d6631;
+      color: #48f077;
     }
   }
 `;

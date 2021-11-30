@@ -51,15 +51,13 @@ export default async (req, res) => {
       phone: patients[0].phone,
       convenio: patients[0].convenio,
       anamnese: patients[0].anamnese,
-      address: [
-        {
-          cep: patients[0].address.cep,
-          street: patients[0].address.street,
-          number: patients[0].address.number,
-          state: patients[0].address.state,
-          district: patients[0].address.district,
-        },
-      ],
+      address: {
+        cep: patients[0].address.cep,
+        street: patients[0].address.street,
+        number: patients[0].address.number,
+        state: patients[0].address.state,
+        district: patients[0].address.district,
+      },
     };
     await db
       .collection('Doctor')
@@ -68,28 +66,5 @@ export default async (req, res) => {
         { $addToSet: { patients: newPatient, upsert: true } }
       );
     res.status(200).json(patients);
-  } else if (req.method === 'PUT') {
-    const { email, patients } = req.body;
-
-    if (!email || !emailP) {
-      res.status(400).json({ error: 'Missing parameter on request body' });
-      return;
-    }
-
-    const { db } = await connect();
-
-    const patientDell = {
-      email: patients[0].email,
-    };
-
-    await db
-      .collection('Doctor')
-      .updateOne(
-        { email: email },
-        { $pull: { patients: { email: patientDell.email } } }
-      );
-    res.status(200).json(patientDell);
-  } else {
-    res.status(400).json({ error: 'Error' });
   }
 };

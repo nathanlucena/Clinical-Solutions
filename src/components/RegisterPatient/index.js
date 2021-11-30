@@ -2,16 +2,19 @@ import React, { useContext, useState } from 'react';
 import userContext from '../../contexts/userContext';
 import axios from 'axios';
 import ReactLoading from 'react-loading';
+import InputMask from 'react-input-mask';
+import interroga from '../../assets/images/interroga.svg';
+import Image from 'next/image';
 
 import {
   Wrapper,
-  Option,
   Left,
   Right,
   DoubleInput,
   DivInput,
   ButtonDiv,
 } from './styles';
+import menuContext from '../../contexts/menuContext';
 
 const ufArray = [
   'AC',
@@ -45,23 +48,24 @@ const ufArray = [
 
 export const RegisterPatient = ({ active, emailGoogle, avatarGoogle }) => {
   const { userInfo } = useContext(userContext);
+  const { setMenuOption } = useContext(menuContext);
   const user = userInfo;
-  const [name, setName] = useState("")
-  const [sex, setSex] = useState("M")
-  const [birthday, setBirthday] = useState("")
-  const [email, setEmail] = useState("")
-  const [rg, setRg] = useState("")
-  const [cpf, setCpf] = useState("")
-  const [maritalStatus, setMaritalStatus] = useState("Solteiro")
-  const [profession, setProfession] = useState("")
-  const [healthInsurance, setHealthInsurance] = useState("")
-  const [street, setStreet] = useState("")
-  const [number, setNumber] = useState("")
-  const [cep, setCep] = useState("")
-  const [state, setState] = useState("AC")
-  const [cellphone, setCellphone] = useState("")
-  const [neighborhood, setNeighborhood] = useState("")
-  const [loading, setLoading] = useState(false)
+  const [name, setName] = useState('');
+  const [sex, setSex] = useState('M');
+  const [birthday, setBirthday] = useState('');
+  const [email, setEmail] = useState('');
+  const [rg, setRg] = useState('');
+  const [cpf, setCpf] = useState('');
+  const [maritalStatus, setMaritalStatus] = useState('Solteiro');
+  const [profession, setProfession] = useState('');
+  const [healthInsurance, setHealthInsurance] = useState('');
+  const [street, setStreet] = useState('');
+  const [number, setNumber] = useState('');
+  const [cep, setCep] = useState('');
+  const [state, setState] = useState('AC');
+  const [cellphone, setCellphone] = useState('');
+  const [neighborhood, setNeighborhood] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleChangeName = (e) => {
     setName(e.target.value);
@@ -110,47 +114,105 @@ export const RegisterPatient = ({ active, emailGoogle, avatarGoogle }) => {
     setNeighborhood(e.target.value);
   };
 
-  const CreatePatient = async (name, sex, email, birthday, cpf, rg, maritalStatus, profession, cellphone, healthInsurance, cep, street, number, neighborhood, state) => {
-    console.log(user.email)
-    if ((name !== "" && sex !== "" && email !== "" && birthday !== "" && cpf !== "" && rg !== ""
-      && maritalStatus !== "" && profession !== "" && cellphone !== "" && healthInsurance !== ""
-      && cep !== "" && street !== "" && number !== "" && state !== "" && neighborhood !== "") &&
-      (name !== null && sex !== null && email !== null && birthday !== null && cpf !== null && rg !== null
-        && maritalStatus !== null && profession !== null && cellphone !== null && healthInsurance !== null
-        && cep !== null && street !== null && number !== null && state !== null && neighborhood !== null) &&
-      (name !== undefined && sex !== undefined && email !== undefined && birthday !== undefined
-        && cpf !== undefined && rg !== undefined && maritalStatus !== undefined && profession !== undefined
-        && cellphone !== undefined && healthInsurance !== undefined && cep !== undefined && street !== undefined
-        && number !== undefined && state !== undefined && neighborhood !== undefined)) {
+  const CreatePatient = async (
+    name,
+    sex,
+    email,
+    birthday,
+    cpf,
+    rg,
+    maritalStatus,
+    profession,
+    cellphone,
+    healthInsurance,
+    cep,
+    street,
+    number,
+    neighborhood,
+    state
+  ) => {
+    console.log(user.email);
+    if (
+      name !== '' &&
+      sex !== '' &&
+      email !== '' &&
+      birthday !== '' &&
+      cpf !== '' &&
+      rg !== '' &&
+      maritalStatus !== '' &&
+      profession !== '' &&
+      cellphone !== '' &&
+      healthInsurance !== '' &&
+      cep !== '' &&
+      street !== '' &&
+      number !== '' &&
+      state !== '' &&
+      neighborhood !== '' &&
+      name !== null &&
+      sex !== null &&
+      email !== null &&
+      birthday !== null &&
+      cpf !== null &&
+      rg !== null &&
+      maritalStatus !== null &&
+      profession !== null &&
+      cellphone !== null &&
+      healthInsurance !== null &&
+      cep !== null &&
+      street !== null &&
+      number !== null &&
+      state !== null &&
+      neighborhood !== null &&
+      name !== undefined &&
+      sex !== undefined &&
+      email !== undefined &&
+      birthday !== undefined &&
+      cpf !== undefined &&
+      rg !== undefined &&
+      maritalStatus !== undefined &&
+      profession !== undefined &&
+      cellphone !== undefined &&
+      healthInsurance !== undefined &&
+      cep !== undefined &&
+      street !== undefined &&
+      number !== undefined &&
+      state !== undefined &&
+      neighborhood !== undefined
+    ) {
       setLoading(true);
-      await axios.put("http://localhost:3000/api/doctor", {
-        "email": user.email,
-        "patients": [{
-          "name": name,
-          "sexo": sex,
-          "email": email,
-          "birthDate": birthday,
-          "cpf": cpf,
-          "rg": rg,
-          "status": maritalStatus,
-          "profession": profession,
-          "phone": cellphone,
-          "convenio": healthInsurance,
-          "anamnese": "",
-          "address": {
-            "cep": cep,
-            "street": street,
-            "number": number,
-            "state": state,
-            "district": neighborhood
-          }
-        }]
-      }).then(() => {
-        setLoading(false);
-      }).catch(error => {
-        setLoading(false);
-        return error;
-      })
+      await axios
+        .put('http://localhost:3000/api/doctor', {
+          email: user.email,
+          patients: [
+            {
+              name: name,
+              sexo: sex,
+              email: email,
+              birthDate: birthday,
+              cpf: cpf,
+              rg: rg,
+              status: maritalStatus,
+              profession: profession,
+              phone: cellphone,
+              convenio: healthInsurance,
+              anamnese: [],
+              address: {
+                cep: cep,
+                street: street,
+                number: number,
+                state: state,
+                district: neighborhood,
+              },
+            },
+          ],
+        })
+        .then(() => {
+          setLoading(false);
+        })
+        .catch((error) => {
+          setLoading(false);
+          return error;
+        });
     } else {
       alert('Preencha todos os campos!');
     }
@@ -159,27 +221,38 @@ export const RegisterPatient = ({ active, emailGoogle, avatarGoogle }) => {
   return (
     <Wrapper>
       {loading && (
-        <div style={{
-          display: "flex",
-          position: "absolute",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          top: 0,
-          left: 0,
-          zIndex: 5000,
-          height: "100%",
-          width: "100%",
-          backgroundColor: "rgba(0, 0, 0, 0.22)"
-        }}>
-          <ReactLoading type="spin" color="#ffffff" height={"20%"} width={"20%"} />
-          <span style={{
+        <div
+          style={{
             display: 'flex',
-            position: "relative",
-            color: '#ffffff',
-            fontSize: 30,
-            top: "20%"
-          }}>Carregando...</span>
+            position: 'absolute',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            top: 0,
+            left: 0,
+            zIndex: 5000,
+            height: '100%',
+            width: '100%',
+            backgroundColor: 'rgba(0, 0, 0, 0.22)',
+          }}
+        >
+          <ReactLoading
+            type="spin"
+            color="#ffffff"
+            height={'20%'}
+            width={'20%'}
+          />
+          <span
+            style={{
+              display: 'flex',
+              position: 'relative',
+              color: '#ffffff',
+              fontSize: 30,
+              top: '20%',
+            }}
+          >
+            Carregando...
+          </span>
         </div>
       )}
       <Left>
@@ -217,7 +290,8 @@ export const RegisterPatient = ({ active, emailGoogle, avatarGoogle }) => {
         </DivInput>
         <DivInput>
           <p>Data de Nascimento</p>
-          <input
+          <InputMask
+            mask="99/99/9999"
             type="text"
             id="InputBirthday"
             value={birthday}
@@ -235,7 +309,8 @@ export const RegisterPatient = ({ active, emailGoogle, avatarGoogle }) => {
         </DivInput>
         <DivInput>
           <p>CPF</p>
-          <input
+          <InputMask
+            mask="999.999.999-99"
             type="text"
             id="InputCPF"
             value={cpf}
@@ -244,7 +319,8 @@ export const RegisterPatient = ({ active, emailGoogle, avatarGoogle }) => {
         </DivInput>
         <DivInput>
           <p>RG</p>
-          <input
+          <InputMask
+            mask="99.999.999-99"
             type="text"
             id="InputRG"
             value={rg}
@@ -275,7 +351,8 @@ export const RegisterPatient = ({ active, emailGoogle, avatarGoogle }) => {
         </DivInput>
         <DivInput>
           <p>Celular</p>
-          <input
+          <InputMask
+            mask="(99) 9999-9999"
             type="text"
             id="InputCellphone"
             value={cellphone}
@@ -314,8 +391,14 @@ export const RegisterPatient = ({ active, emailGoogle, avatarGoogle }) => {
               />
             </div>
             <div className="big">
-              <p>CEP</p>
-              <input
+              <div className="cepDiv">
+                <p>CEP</p>
+                <a href="https://achacep.com.br/" target="_blank">
+                  <Image src={interroga} />
+                </a>
+              </div>
+              <InputMask
+                mask="99999-999"
                 type="text"
                 id="InputCEP"
                 value={cep}
@@ -346,29 +429,38 @@ export const RegisterPatient = ({ active, emailGoogle, avatarGoogle }) => {
           </DoubleInput>
         </div>
         <ButtonDiv>
-          <button id="resetBnt" type="reset">
+          <button
+            id="resetBnt"
+            type="reset"
+            onClick={() => {
+              setMenuOption(' ');
+            }}
+          >
             Cancelar
           </button>
           <button
             id="submitBnt"
             type="submit"
-            onClick={() => CreatePatient(
-              name,
-              sex,
-              email,
-              birthday,
-              cpf,
-              rg,
-              maritalStatus,
-              profession,
-              cellphone,
-              healthInsurance,
-              cep,
-              street,
-              number,
-              neighborhood,
-              state
-            )}
+            onClick={() => {
+              CreatePatient(
+                name,
+                sex,
+                email,
+                birthday,
+                cpf,
+                rg,
+                maritalStatus,
+                profession,
+                cellphone,
+                healthInsurance,
+                cep,
+                street,
+                number,
+                neighborhood,
+                state
+              );
+              setMenuOption(' ');
+            }}
           >
             Registrar paciente
           </button>

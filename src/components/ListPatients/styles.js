@@ -73,6 +73,7 @@ export const InputDiv = styled.div`
   width: 300px;
 
   input {
+    background: transparent;
     width: 100%;
     height: 70%;
     border: 0px;

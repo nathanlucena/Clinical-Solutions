@@ -59,17 +59,39 @@ export default async (req, res) => {
     const { db } = await connect();
 
     const patientDell = {
-      email: patients[0].email,
+      rg: patients.rg,
     };
 
     await db
       .collection('Doctor')
       .updateOne(
         { email: email },
-        { $pull: { patients: { email: patientDell.email } } }
+        { $pull: { patients: { rg: patientDell.rg } } }
       );
     res.status(200).json(patientDell);
-  } else {
+
+    // } else if (req.method === 'PUT') {
+    //   const { email, patients } = req.body;
+
+    //   if (!email || !patients) {
+    //     res.status(400).json({ error: 'Missing parameter on request body' });
+    //     return;
+    //   }
+
+    //   const { db } = await connect();
+
+    //   const patientDell = {
+    //     email: patients[0].email,
+    //   };
+
+    //   await db
+    //     .collection('Doctor')
+    //     .updateOne(
+    //       { email: email },
+    //       { $pull: { patients: { email: patientDell.email } } }
+    //     );
+    //   res.status(200).json(patientDell);
+    // } else {
     res.status(400).json({ error: 'Error' });
   }
 };
