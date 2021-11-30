@@ -8,13 +8,14 @@ import { Wrapper, Option, Line } from './styles';
 import axios from 'axios';
 
 export const Menu = (options) => {
-  const [clicked, setClicked] = useState('');
-  const [listP, setListP] = useState([]);
-
   const { setMenuOption } = useContext(menuContext);
   const { userInfo } = useContext(userContext);
   const { setListPatients } = useContext(listContext);
   const { actualPatient, setActualPatient } = useContext(patientContext);
+  
+  const [clicked, setClicked] = useState('');
+
+  const optionsArray = options.options;
 
   function handleClick(i) {
     if (i !== clicked) {
@@ -22,17 +23,13 @@ export const Menu = (options) => {
     }
   }
 
-  const optionsArray = options.options;
-
   const getBanco = async (email) => {
     const response = await axios.get(
       'http://localhost:3000/api/doctor/' + email
-    );
-    let resp = response;
-    console.log(resp.data?.patients);
-    if (listP !== resp.data?.patients) {
+    ).then((response) => {
+      let resp = response;
       setListPatients(resp.data?.patients);
-    }
+    })
   };
 
   const handleList = (option) => {

@@ -104,7 +104,6 @@ export const RegisterPatient = ({ active, emailGoogle, avatarGoogle }) => {
     setCep(e.target.value);
   };
   const handleChangeState = (e) => {
-    console.log(e.target.value);
     setState(e.target.value);
   };
   const handleChangeCellphone = (e) => {
@@ -131,7 +130,6 @@ export const RegisterPatient = ({ active, emailGoogle, avatarGoogle }) => {
     neighborhood,
     state
   ) => {
-    console.log(user.email);
     if (
       name !== '' &&
       sex !== '' &&

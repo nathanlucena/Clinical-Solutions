@@ -22,7 +22,6 @@ const useDataAccount = () => {
     const { data, error } = await useSWR(!loggedAccount && !loading ? `/api/patient/${session?.user.email}` : null, AxiosLogged);
 
     useEffect(() => {
-      console.log("teste 3")
       if (session?.user.email !== data?.data[0]?.email) setLoggedAccount(true);
     }, [data]);
 

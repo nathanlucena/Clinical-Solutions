@@ -38,14 +38,9 @@ export default function Component() {
   const user = data?.data;
 
   useEffect(() => {
-    function setContext() {
-      if (user === undefined) {
-        console.log('oi');
-      } else {
-        setUserInfo(user);
-      }
+    if(user!==undefined){
+      setUserInfo(user);
     }
-    setContext();
   }, [user]);
 
   function ageFunc(age) {
