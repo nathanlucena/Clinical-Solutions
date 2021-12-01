@@ -4,6 +4,7 @@ import { useSession } from 'next-auth/client';
 import { Header } from '../../src/components/header';
 import { Menu } from '../../src/components/Menu';
 import userContext from '../../src/contexts/userContext';
+import menuContext from '../../src/contexts/menuContext';
 import AxiosLogged from '../../utils/api';
 import patientContext from '../../src/contexts/patientContext';
 import Image from 'next/image';
@@ -18,16 +19,25 @@ import { IoMdTrash } from 'react-icons/io';
 
 export default function Component() {
   const { setUserInfo, userInfo } = useContext(userContext);
-  const { actualPatient } = useContext(patientContext);
+  const { actualPatient, setActualPatient } = useContext(patientContext);
+  const { setMenuOption } = useContext(menuContext);
 
   const [loggedAccount, setLoggedAccount] = useState(false);
-
+  const [anamnese, setAnamnese] = useState('');
   const [session, loading] = useSession();
 
   const { data, error } = useSWR(
     !loggedAccount && !loading ? `/api/doctor/${session?.user.email}` : null,
     AxiosLogged
   );
+
+  const handleChangeAnamnese = (e) => {
+    setAnamnese(e.target.value);
+  }
+
+  const handleSubmitAnamnese = async () => {
+    await axios.put
+  }
 
   useEffect(() => {
     if (session?.user.email !== data?.data.email) setLoggedAccount(true);
@@ -131,9 +141,9 @@ export default function Component() {
                 <BtnDell>
                   <span
                     onClick={() => {
-                      // handleDelete();
-                      // setMenuOption(' ');
-                      // setActualPatient();
+                      handleDelete();
+                      setMenuOption('Lista de Pacientes');
+                      setActualPatient();
                     }}
                   >
                     Deletar
@@ -153,10 +163,46 @@ export default function Component() {
                 </div>
               </Anamnese>
             ) : null}
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+              <textarea
+                spellcheck
+                placeholder="Insira a anamnese do paciente..."
+                value={anamnese}
+                onChange={handleChangeAnamnese}
+                style={{
+                  border: '1px solid #1D6631',
+                  padding: '10px',
+                  marginRight: '5.5%',
+                  marginBottom: '2%',
+                  width: '90%',
+                  height: '200px'
+                }}>
+
+              </textarea>
+              <button 
+                onClick={handleSubmitAnamnese(anamnese, )}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  border: '1px solid #1D6631',
+                  backgroundColor: '#48F077',
+                  fontFamily: 'poppins',
+                  fontSize: '14px',
+                  fontWeight: 'bold',
+                  borderRadius: '10px',
+                  padding: '10px',
+                  marginRight: '5.5%',
+                  marginBottom: '4%',
+                  width: '150px',
+                  height: '50px'
+                }}
+              >Salvar Anamnese</button>
+            </div>
           </Wrapper>
         ) : (
           <></>
         )}
+
       </div>
     </>
   );

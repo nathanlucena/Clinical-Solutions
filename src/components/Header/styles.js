@@ -49,6 +49,58 @@ export const Wrapper = styled.div`
   }
 `;
 
+export const Modal = styled.div`
+  display: flex;
+  flex-direction: column;
+  background-color: #95FAB1;
+  padding: 30px;
+  border-radius: 10px;
+  height: 200px;
+  width: 400px;
+  z-index: 1001;
+`;
+
+export const ModalContainer = styled.div`
+  display: flex;
+  position: absolute;
+  justify-content:center;
+  align-items: center;
+  top: 0px;
+  left: 0px;
+  background-color: rgba(0, 0, 0, 0.4);
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+`;
+
+
+export const ModalTitle = styled.span``;
+
+export const Button = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #48F077;
+  color: #1d6631;
+  border: 1px solid #1d6631;
+  border-radius: 10px;
+  height: 50px;
+  width: 100px;
+  &:hover {
+    background-color: #1d6631;
+    color: #48F077; 
+    border: 1px solid #48F077;
+  }
+`;
+export const ButtonText = styled.div`
+`;
+export const ButtonContainer = styled.div`
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;
+`;
+
 export const DivTitle = styled.div`
   display: flex;
   justify-content: start;

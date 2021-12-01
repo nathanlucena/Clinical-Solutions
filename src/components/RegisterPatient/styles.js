@@ -10,6 +10,10 @@ export const Wrapper = styled.div`
   justify-content: space-between;
   font-weight: 600;
   color: #1d6631;
+  overflow: auto;
+  @media only screen and (max-height: 768px ){
+    height: 90vw;
+  }
   p {
     font-size: 14px;
     margin: 0px;
