@@ -80,11 +80,11 @@ export const NotRegistered = ({ emailGoogle, avatarGoogle }) => {
             >
               <form>
                 <p>Nome</p>
-                <input type="text" id="InputName" placeholder="Nome" onChange={handleChangeName} />
+                <input type="text" id="InputName" placeholder="Insira o seu nome" onChange={handleChangeName} />
                 <p>Especialidade</p>
-                <input type="text" id="InputSpecialty" placeholder="Especialidade" onChange={handleChangeSpecialty} />
+                <input type="text" id="InputSpecialty" placeholder="Insira sua especialidade" onChange={handleChangeSpecialty} />
                 <p>Nome da Clinica</p>
-                <input type="text" id="InputClinicName" placeholder="Nome da Clinica" onChange={handleChangeClinicName} />
+                <input type="text" id="InputClinicName" placeholder="Insira o nome da Clinica" onChange={handleChangeClinicName} />
                 <p>Chave de Ativação</p>
                 <input type="text" id="InputActivationKey" placeholder="XXXX-XXXX-XXXX-XXXXX" onChange={handleChangeActivationKey} />
                 <button
