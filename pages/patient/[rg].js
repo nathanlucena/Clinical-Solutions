@@ -24,7 +24,10 @@ export default function Component() {
 
   const [loggedAccount, setLoggedAccount] = useState(false);
   const [anamnese, setAnamnese] = useState('');
+  const [temporary, setTemporary] = useState([])
   const [session, loading] = useSession();
+  const [patient, setPatient] = useState({});
+
 
   const { data, error } = useSWR(
     !loggedAccount && !loading ? `/api/doctor/${session?.user.email}` : null,
@@ -36,7 +39,58 @@ export default function Component() {
   }
 
   const handleSubmitAnamnese = async () => {
-    await axios.put
+    console.log(actualPatient)
+    setPatient({
+      address: actualPatient.address,
+      anamnese: [],
+      birthDate: actualPatient.birthDate,
+      convenio: actualPatient.convenio,
+      cpf: actualPatient.cpf,
+      email: actualPatient.email,
+      name: actualPatient.name,
+      phone: actualPatient.phone,
+      profession: actualPatient.profession,
+      rg: actualPatient.rg,
+      sexo: actualPatient.sexo,
+      status: actualPatient.status
+    })
+    if(patient.anamnese !== []){
+      setTemporary(patient.anamnese);
+    }
+    await axios.put('http://localhost:3000/api/doctor/' + userInfo?.email, {
+      patients: {
+        rg: actualPatient?.rg,
+      },
+    });
+    handleAnamnese(patient)
+  };
+
+  const handleAnamnese = async (patient) => {
+    console.log(temporary)
+    if(temporary !== []){
+      setTemporary(temp=> [...temp, anamnese]);
+    }else{
+      setTemporary([anamnese]);
+    }
+    await axios.put('http://localhost:3000/api/doctor', {
+      email: user.email,
+      patients: [
+        {
+          address: patient.address,
+          anamnese: temporary/* ["teste", "teste"] */,
+          birthDate: patient.birthDate,
+          convenio: patient.convenio,
+          cpf: patient.cpf,
+          email: patient.email,
+          name: patient.name,
+          phone: patient.phone,
+          profession: patient.profession,
+          rg: patient.rg,
+          sexo: patient.sexo,
+          status: patient.status,
+        },
+      ],
+    })
   }
 
   useEffect(() => {
@@ -179,8 +233,8 @@ export default function Component() {
                 }}>
 
               </textarea>
-              <button 
-                onClick={handleSubmitAnamnese(anamnese, )}
+              <button
+                onClick={handleSubmitAnamnese}
                 style={{
                   display: 'flex',
                   alignItems: 'center',
