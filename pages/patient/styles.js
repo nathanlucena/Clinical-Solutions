@@ -9,6 +9,26 @@ export const Wrapper = styled.div`
   font-weight: 600;
   color: #1d6631;
   overflow: auto;
+  .btn-submit{
+    display: flex;
+    align-items: center;
+    border: none;
+    background-color: #48F077;
+    font-family: poppins;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 10px;
+    padding: 10px;
+    margin-right: 5.5%;
+    margin-bottom: 4%;
+    width: 150px;
+    height: 50px;
+    &:hover{
+      border: 1px solid #48F077;
+      background-color: #1D6631;
+      color: #48F077;
+    }
+  }
 `;
 
 export const Infos = styled.div`
@@ -64,9 +84,15 @@ export const BtnDell = styled.div`
   height: 50px;
   border-radius: 5px;
   fill: #fff;
-  position: absolute;
-  right: 50px;
-  top: 130px;
+  position: relative;
+  @media screen and (max-height: 1080px){
+    right: -290px;
+    top: -160px;
+  }
+  @media screen and (max-height: 768px){
+    right: -340px;
+    top: -160px;
+  }
   .icon {
     font-size: 35px;
   }

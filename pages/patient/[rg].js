@@ -12,6 +12,7 @@ import maleImg from '../../src/assets/images/homem.png';
 import femaleImg from '../../src/assets/images/mulher.png';
 import trash from '../../src/assets/images/lixo.svg';
 import Link from 'next/link';
+import moment from 'moment';
 
 import { Wrapper, Infos, Anamnese, BtnDell } from './styles';
 import axios from 'axios';
@@ -26,71 +27,67 @@ export default function Component() {
   const [anamnese, setAnamnese] = useState('');
   const [temporary, setTemporary] = useState([])
   const [session, loading] = useSession();
-  const [patient, setPatient] = useState({});
-
+  const [patient, setPatient] = useState();
 
   const { data, error } = useSWR(
     !loggedAccount && !loading ? `/api/doctor/${session?.user.email}` : null,
     AxiosLogged
   );
 
+  useEffect(() => {
+    setPatient(actualPatient);
+  }, [])
+
   const handleChangeAnamnese = (e) => {
-    setAnamnese(e.target.value);
+    setAnamnese({
+      anamnese: e.target.value,
+      date: moment(new Date).format('DD/MM/YYYY'),
+    });
   }
 
   const handleSubmitAnamnese = async () => {
-    console.log(actualPatient)
-    setPatient({
-      address: actualPatient.address,
-      anamnese: [],
-      birthDate: actualPatient.birthDate,
-      convenio: actualPatient.convenio,
-      cpf: actualPatient.cpf,
-      email: actualPatient.email,
-      name: actualPatient.name,
-      phone: actualPatient.phone,
-      profession: actualPatient.profession,
-      rg: actualPatient.rg,
-      sexo: actualPatient.sexo,
-      status: actualPatient.status
-    })
-    if(patient.anamnese !== []){
-      setTemporary(patient.anamnese);
+    if(anamnese!==''){
+      await axios.put('http://localhost:3000/api/doctor/' + userInfo?.email, {
+        patients: {
+          rg: actualPatient?.rg,
+        },
+      });
     }
-    await axios.put('http://localhost:3000/api/doctor/' + userInfo?.email, {
-      patients: {
-        rg: actualPatient?.rg,
-      },
-    });
-    handleAnamnese(patient)
   };
 
-  const handleAnamnese = async (patient) => {
-    console.log(temporary)
-    if(temporary !== []){
-      setTemporary(temp=> [...temp, anamnese]);
-    }else{
-      setTemporary([anamnese]);
+  const handleAnamnese = async () => {
+    let temp = []
+    if (patient.anamnese.length !== 0) {
+      patient.anamnese.map((anamnese) => {
+        temp.push(anamnese)
+      })
     }
-    await axios.put('http://localhost:3000/api/doctor', {
-      email: user.email,
-      patients: [
-        {
-          address: patient.address,
-          anamnese: temporary/* ["teste", "teste"] */,
-          birthDate: patient.birthDate,
-          convenio: patient.convenio,
-          cpf: patient.cpf,
-          email: patient.email,
-          name: patient.name,
-          phone: patient.phone,
-          profession: patient.profession,
-          rg: patient.rg,
-          sexo: patient.sexo,
-          status: patient.status,
-        },
-      ],
-    })
+    if (temp.length !== 0) {
+      temp.push(anamnese)
+    } else {
+      temp = [anamnese];
+    }
+    if(anamnese!==''){
+      await axios.put('http://localhost:3000/api/doctor', {
+        email: userInfo.email,
+        patients: [
+          {
+            address: patient.address,
+            anamnese: temp,
+            birthDate: patient.birthDate,
+            convenio: patient.convenio,
+            cpf: patient.cpf,
+            email: patient.email,
+            name: patient.name,
+            phone: patient.phone,
+            profession: patient.profession,
+            rg: patient.rg,
+            sexo: patient.sexo,
+            status: patient.status,
+          },
+        ],
+      })
+    }
   }
 
   useEffect(() => {
@@ -212,7 +209,22 @@ export default function Component() {
                 <p>Avaliações Previas: </p>
                 <div className="divMap">
                   {actualPatient?.anamnese.map((i) => {
-                    return <span>{i}</span>;
+                    return (
+                      <div style={{display: 'flex', flexDirection: 'column'}}>
+                        <span  style={{ padding: 0, marginBottom: '5px'}}>{i.date}:</span>
+                        <span style={{ padding: 0, marginLeft: '20px'}}>{i.anamnese}</span>
+                        {actualPatient?.anamnese.length > 1 ? 
+                          <div 
+                          style={{
+                            height: '0px',
+                            borderBottom: '1px dashed #1D6631',
+                            marginBottom: '5px',
+                            marginTop: '5px'
+                          }}/>
+                          : null
+                        }
+                      </div>
+                    );
                   })}
                 </div>
               </Anamnese>
@@ -221,7 +233,7 @@ export default function Component() {
               <textarea
                 spellcheck
                 placeholder="Insira a anamnese do paciente..."
-                value={anamnese}
+                value={anamnese.anamnese}
                 onChange={handleChangeAnamnese}
                 style={{
                   border: '1px solid #1D6631',
@@ -234,29 +246,19 @@ export default function Component() {
 
               </textarea>
               <button
-                onClick={handleSubmitAnamnese}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  border: '1px solid #1D6631',
-                  backgroundColor: '#48F077',
-                  fontFamily: 'poppins',
-                  fontSize: '14px',
-                  fontWeight: 'bold',
-                  borderRadius: '10px',
-                  padding: '10px',
-                  marginRight: '5.5%',
-                  marginBottom: '4%',
-                  width: '150px',
-                  height: '50px'
+                onClick={() => {
+                  handleSubmitAnamnese();
+                  handleAnamnese();
+                  setMenuOption('Lista de Pacientes');
+                  setActualPatient();
                 }}
+                className="btn-submit"
               >Salvar Anamnese</button>
             </div>
           </Wrapper>
         ) : (
           <></>
         )}
-
       </div>
     </>
   );
